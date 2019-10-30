@@ -1,0 +1,36 @@
+{
+    "name": "helicon/object-type-parser",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "polidog",
+            "email": "polidogs@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Helicon\\ObjectTypeParser\\": "src/"
+        },
+        "files": [
+            "src-files/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Helicon\\ObjectTypeParser\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "~7.3",
+        "psr/simple-cache": "^1.0",
+        "zendframework/zend-code": "^3.4",
+        "nikic/php-parser": "^4.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpunit/phpunit": "^8.4"
+    },
+    "scripts": {
+        "cs-fix": ["php-cs-fixer fix -v"]
+    }
+}
