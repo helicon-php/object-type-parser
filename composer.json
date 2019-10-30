@@ -23,8 +23,7 @@
     "require": {
         "php": "~7.3",
         "psr/simple-cache": "^1.0",
-        "zendframework/zend-code": "^3.4",
-        "nikic/php-parser": "^4.2"
+        "zendframework/zend-code": "^3.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
