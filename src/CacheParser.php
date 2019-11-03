@@ -19,10 +19,6 @@ class CacheParser implements ParserInterface
      */
     private $parser;
 
-    /**
-     * @param CacheInterface  $cache
-     * @param ParserInterface $parser
-     */
     public function __construct(CacheInterface $cache, ParserInterface $parser)
     {
         $this->cache = $cache;
@@ -42,11 +38,6 @@ class CacheParser implements ParserInterface
         return $schema;
     }
 
-    /**
-     * @param string $className
-     *
-     * @return array|null
-     */
     private function readCache(string $className): ?array
     {
         if (null === $this->cache) {
@@ -59,10 +50,6 @@ class CacheParser implements ParserInterface
         }
     }
 
-    /**
-     * @param string $className
-     * @param array  $schema
-     */
     private function saveCache(string $className, array $schema): void
     {
         if (null !== $this->cache) {
