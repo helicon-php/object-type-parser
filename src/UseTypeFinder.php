@@ -64,6 +64,11 @@ class UseTypeFinder
             return $this->reflectionClass->getName();
         }
 
+        $targetClassName = "{$this->reflectionClass->getNamespaceName()}\\{$className}";
+        if (class_exists($targetClassName)) {
+            return $targetClassName;
+        }
+
         throw new \RuntimeException('class not found '.$className);
     }
 }
