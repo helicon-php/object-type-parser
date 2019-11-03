@@ -7,7 +7,7 @@ namespace Helicon\ObjectTypeParser;
 interface ParserInterface
 {
     /**
-     * @param string $className 
+     * @param string $className
      *
      * @return mixed
      *

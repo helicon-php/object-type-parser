@@ -25,8 +25,8 @@ class UseTypeFinder
         'double',
     ];
 
-    /**	
-     * @param \ReflectionClass $reflectionClass	
+    /**
+     * @param \ReflectionClass $reflectionClass
      */
     public function __construct(\ReflectionClass $reflectionClass)
     {
