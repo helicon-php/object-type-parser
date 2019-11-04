@@ -33,4 +33,21 @@ class ParserTest extends TestCase
             ],
         ], $schema);
     }
+
+    public function testParseSameHierarchy()
+    {
+        $parser = new Parser();
+        $schema = ($parser)(Customer::class);
+        $this->assertSame([
+            'id' => [
+                'type' => 'int',
+            ],
+            'email' => [
+                'type' => 'string',
+            ],
+            'profile' => [
+                'type' => CustomerProfile::class,
+            ],
+        ], $schema);
+    }
 }
