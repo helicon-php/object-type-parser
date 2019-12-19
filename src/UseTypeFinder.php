@@ -69,6 +69,10 @@ class UseTypeFinder
             return $targetClassName;
         }
 
+        if (class_exists($className)) {
+            return $className;
+        }
+
         throw new \RuntimeException('class not found '.$className);
     }
 }
