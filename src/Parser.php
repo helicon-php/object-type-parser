@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Helicon\ObjectTypeParser;
 
-use Zend\Code\Generator\DocBlock\Tag\VarTag;
-use Zend\Code\Generator\DocBlockGenerator;
-use Zend\Code\Reflection\DocBlockReflection;
+use Laminas\Code\Generator\DocBlock\Tag\VarTag;
+use Laminas\Code\Generator\DocBlockGenerator;
+use Laminas\Code\Reflection\DocBlockReflection;
 
 class Parser implements ParserInterface
 {
