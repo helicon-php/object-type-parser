@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Helicon\ObjectTypeParser;
 
-use Zend\Code\Reflection\FileReflection;
+use Laminas\Code\Reflection\FileReflection;
 
 class UseTypeFinder
 {
@@ -15,19 +15,6 @@ class UseTypeFinder
      */
     private $uses;
 
-    private const SUPPORTED_TYPES = [
-        'boolean',
-        'bool',
-        'integer',
-        'int',
-        'string',
-        'float',
-        'double',
-    ];
-
-    /**
-     * @param \ReflectionClass $reflectionClass
-     */
     public function __construct(\ReflectionClass $reflectionClass)
     {
         $this->reflectionClass = $reflectionClass;
