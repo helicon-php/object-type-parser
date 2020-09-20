@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Helicon\ObjectTypeParser\Tests;
-
 
 use Helicon\ObjectTypeParser\Parser;
 use Helicon\ObjectTypeParser\Tests\Age\Age;
@@ -33,8 +33,30 @@ class ParserPHP74Test extends TestCase
             ],
             'child2' => [
                 'type' => Dog::class,
-            ]
+            ],
         ], $schema);
     }
 
+    public function testNonPropertyTypeClass(): void
+    {
+        $parser = new Parser();
+        $schema = ($parser)(Friend::class);
+        $this->assertSame([
+            'id' => [
+                'type' => 'int',
+            ],
+            'name' => [
+                'type' => Name::class,
+            ],
+            'age' => [
+                'type' => Age::class,
+            ],
+            'createdAt' => [
+                'type' => \DateTime::class,
+            ],
+            'child' => [
+                'type' => Friend::class,
+            ],
+        ], $schema);
+    }
 }
