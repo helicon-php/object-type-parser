@@ -25,10 +25,39 @@ class Parser implements ParserInterface
             throw new ParserException('Reflection error', $e->getCode(), $e);
         }
 
-        $finder = new UseTypeFinder($refClass);
+        if (version_compare(PHP_VERSION, '7.4', '>=')) {
+            return  $this->parse($refClass);
+        }
 
+        return $this->parseOld($refClass);
+    }
+
+    public function parse(\ReflectionClass  $reflectionClass) :array
+    {
         $schema = [];
-        foreach ($refClass->getProperties() as $property) {
+
+        foreach ($reflectionClass->getProperties() as $property) {
+            $type = $property->getType();
+            $name = $type->getName();
+            if ($name === 'self') {
+                $schema[$property->getName()] = [
+                    'type' => $reflectionClass->getName(),
+                ];
+            } else {
+                $schema[$property->getName()] = [
+                    'type' => $name
+                ];
+            }
+        }
+        return $schema;
+    }
+
+
+    public function parseOld(\ReflectionClass  $reflectionClass) :array
+    {
+        $finder = new UseTypeFinder($reflectionClass);
+
+        foreach ($reflectionClass->getProperties() as $property) {
             $comment = $property->getDocComment();
             $commentReflection = new DocBlockReflection($comment);
             $generator = DocBlockGenerator::fromReflection($commentReflection);
@@ -37,7 +66,7 @@ class Parser implements ParserInterface
                 if ($tag instanceof VarTag) {
                     if ('self' === $tag->getTypes()[0]) {
                         $schema[$property->getName()] = [
-                            'type' => $refClass->getName(),
+                            'type' => $reflectionClass->getName(),
                         ];
                     } else {
                         $schema[$property->getName()] = [
