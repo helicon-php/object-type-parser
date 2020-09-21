@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Helicon\ObjectTypeParser\Tests;
 
 use Helicon\ObjectTypeParser\Parser;
+use Helicon\ObjectTypeParser\ParserException;
 use Helicon\ObjectTypeParser\Tests\Age\Age;
 use Helicon\ObjectTypeParser\Tests\Age\Name;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,7 @@ class ParserTest extends TestCase
         ], $schema);
     }
 
-    public function testParseSameHierarchy()
+    public function testParseSameHierarchy(): void
     {
         $parser = new Parser();
         $schema = ($parser)(Customer::class);
@@ -49,5 +50,12 @@ class ParserTest extends TestCase
                 'type' => CustomerProfile::class,
             ],
         ], $schema);
+    }
+
+    public function testNoTypeHint(): void
+    {
+        $this->expectException(ParserException::class);
+        $parser = new Parser();
+        ($parser)(Cat::class);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Helicon\ObjectTypeParser;
 
+use Laminas\Code\Exception\InvalidArgumentException;
 use Laminas\Code\Generator\DocBlock\Tag\VarTag;
 use Laminas\Code\Generator\DocBlockGenerator;
 use Laminas\Code\Reflection\DocBlockReflection;
@@ -55,67 +56,28 @@ class Parser implements ParserInterface
         return [$property->getName(), $name];
     }
 
+    /**
+     * @param \ReflectionProperty $property
+     * @param UseTypeFinder $finder
+     * @return array
+     */
     private function parseLessPHP73(\ReflectionProperty $property, UseTypeFinder $finder): array
     {
         $comment = $property->getDocComment();
-        $commentReflection = new DocBlockReflection($comment);
-        $generator = DocBlockGenerator::fromReflection($commentReflection);
-        foreach ($generator->getTags() as $tag) {
-            if ($tag instanceof VarTag) {
-                if ('self' === $tag->getTypes()[0]) {
-                    return [$property->getName(), $property->getDeclaringClass()->getName()];
-                } else {
-                    return [$property->getName(), ($finder)($tag->getTypes()[0])];
+        try {
+            $commentReflection = new DocBlockReflection($comment);
+            $generator = DocBlockGenerator::fromReflection($commentReflection);
+            foreach ($generator->getTags() as $tag) {
+                if ($tag instanceof VarTag) {
+                    if ('self' === $tag->getTypes()[0]) {
+                        return [$property->getName(), $property->getDeclaringClass()->getName()];
+                    } else {
+                        return [$property->getName(), ($finder)($tag->getTypes()[0])];
+                    }
                 }
             }
+        } catch (InvalidArgumentException $ie) {
+            throw new ParserException('property parse error, name: '. $property->getName(), 0, $ie);
         }
     }
-
-//    public function parse(\ReflectionClass  $reflectionClass) :array
-//    {
-//        $schema = [];
-//
-//        foreach ($reflectionClass->getProperties() as $property) {
-//            $type = $property->getType();
-//            $name = $type->getName();
-//            if ($name === 'self') {
-//                $schema[$property->getName()] = [
-//                    'type' => $reflectionClass->getName(),
-//                ];
-//            } else {
-//                $schema[$property->getName()] = [
-//                    'type' => $name
-//                ];
-//            }
-//        }
-//        return $schema;
-//    }
-//
-//
-//    public function parseOld(\ReflectionClass  $reflectionClass) :array
-//    {
-//        $finder = new UseTypeFinder($reflectionClass);
-//
-//        foreach ($reflectionClass->getProperties() as $property) {
-//            $comment = $property->getDocComment();
-//            $commentReflection = new DocBlockReflection($comment);
-//            $generator = DocBlockGenerator::fromReflection($commentReflection);
-//
-//            foreach ($generator->getTags() as $tag) {
-//                if ($tag instanceof VarTag) {
-//                    if ('self' === $tag->getTypes()[0]) {
-//                        $schema[$property->getName()] = [
-//                            'type' => $reflectionClass->getName(),
-//                        ];
-//                    } else {
-//                        $schema[$property->getName()] = [
-//                            'type' => ($finder)($tag->getTypes()[0]),
-//                        ];
-//                    }
-//                }
-//            }
-//        }
-//
-//        return $schema;
-//    }
 }
