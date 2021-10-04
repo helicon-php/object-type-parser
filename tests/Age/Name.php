@@ -6,8 +6,5 @@ namespace Helicon\ObjectTypeParser\Tests\Age;
 
 class Name
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 }

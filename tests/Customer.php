@@ -6,18 +6,7 @@ namespace Helicon\ObjectTypeParser\Tests;
 
 class Customer
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var CustomerProfile
-     */
-    private $profile;
+    private int $id;
+    private string $email;
+    private CustomerProfile $profile;
 }

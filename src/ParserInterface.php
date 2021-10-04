@@ -7,9 +7,7 @@ namespace Helicon\ObjectTypeParser;
 interface ParserInterface
 {
     /**
-     * @return mixed
-     *
      * @throws ParserException
      */
-    public function __invoke(string $className);
+    public function __invoke(string $className): mixed;
 }

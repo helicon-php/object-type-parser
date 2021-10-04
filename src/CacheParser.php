@@ -9,23 +9,11 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 class CacheParser implements ParserInterface
 {
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
-     * @var ParserInterface
-     */
-    private $parser;
-
-    public function __construct(CacheInterface $cache, ParserInterface $parser)
+    public function __construct(private CacheInterface $cache, private ParserInterface $parser)
     {
-        $this->cache = $cache;
-        $this->parser = $parser;
     }
 
-    public function __invoke(string $className)
+    public function __invoke(string $className): mixed
     {
         $cached = $this->readCache($className);
         if (null !== $cached) {
@@ -61,7 +49,7 @@ class CacheParser implements ParserInterface
         }
     }
 
-    private function cacheKey(string $className)
+    private function cacheKey(string $className): string
     {
         return sha1($className);
     }

@@ -10,28 +10,9 @@ use Helicon\ObjectTypeParser\Tests\Age\Name as UserName;
 
 class Friend
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var UserName
-     */
-    private $name;
-
-    /**
-     * @var Age
-     */
-    private $age;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var Friend
-     */
-    private $child;
+    private int $id;
+    private UserName $name;
+    private Age $age;
+    private DateTime $createdAt;
+    private Friend $child;
 }

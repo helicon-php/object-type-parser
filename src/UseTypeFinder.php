@@ -8,20 +8,14 @@ use Laminas\Code\Reflection\FileReflection;
 
 class UseTypeFinder
 {
-    private $reflectionClass;
+    private array $uses;
 
-    /**
-     * @var array
-     */
-    private $uses;
-
-    public function __construct(\ReflectionClass $reflectionClass)
+    public function __construct(private \ReflectionClass $reflectionClass)
     {
-        $this->reflectionClass = $reflectionClass;
         $this->uses = (new FileReflection($reflectionClass->getFileName()))->getUses();
     }
 
-    public function __invoke(string $type)
+    public function __invoke(string $type): string
     {
         if (is_scalar_type_name($type)) {
             return $type;

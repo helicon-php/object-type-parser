@@ -6,5 +6,5 @@ namespace Helicon\ObjectTypeParser\Tests\Age;
 
 class Age
 {
-    private $age;
+    private int $age;
 }

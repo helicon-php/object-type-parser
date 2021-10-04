@@ -6,10 +6,12 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('config')
     ->exclude('node_modules');
 
-return PhpCsFixer\Config::create()
-    ->setRules([
+$config = new PhpCsFixer\Config();
+return $config->setRules([
+        '@PSR12' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
+        '@PHP80Migration' => true,
         '@DoctrineAnnotation' => true,
         'array_syntax' => ['syntax' => 'short'],
         'declare_strict_types' => true,
